@@ -15,7 +15,7 @@ width:100%;
 overflow:hidden;
 background:#2576DA;
 color:white;
-height:40px;
+height:50px;
 display:flex;
 align-items:center;
 margin-bottom:20px;
@@ -24,10 +24,10 @@ border-radius:4px;
 
 #eventsFilterApp .ticker-text{
 white-space:nowrap;
-font-size:14px;
-font-weight:500;
-padding-left:70%;
-animation: scrollText 14s linear forwards;
+font-size:18px;
+font-weight:600;
+padding-left:100%;
+animation: scrollText 16s linear forwards;
 }
 
 @keyframes scrollText{
@@ -154,7 +154,7 @@ ticker.offsetHeight;
 
 ticker.innerText = messages[msgIndex];
 
-ticker.style.animation = "scrollText 7s linear forwards";
+ticker.style.animation = "scrollText 16s linear forwards";
 
 msgIndex = (msgIndex + 1) % messages.length;
 
