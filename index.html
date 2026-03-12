@@ -8,6 +8,37 @@ background:#f5f8fc;
 padding:20px;
 }
 
+/* SCROLLING ANNOUNCEMENT BAR */
+
+#eventsFilterApp .ticker-container{
+width:100%;
+overflow:hidden;
+background:#2576DA;
+color:white;
+height:40px;
+display:flex;
+align-items:center;
+margin-bottom:20px;
+border-radius:4px;
+}
+
+#eventsFilterApp .ticker-text{
+white-space:nowrap;
+font-size:14px;
+font-weight:500;
+padding-left:100%;
+animation: scrollText 14s linear forwards;
+}
+
+@keyframes scrollText{
+0%{
+transform:translateX(0);
+}
+100%{
+transform:translateX(-200%);
+}
+}
+
 /* FILTER AREA */
 
 #eventsFilterApp .filter-container{
@@ -63,6 +94,14 @@ font-size:12px;
 
 </style>
 
+<!-- SCROLLING MESSAGE -->
+
+<div class="ticker-container">
+<div class="ticker-text" id="tickerText">
+All Summer Dates are from 10am - 12pm
+</div>
+</div>
+
 <div class="filter-container">
 
 <label>Location:</label>
@@ -96,6 +135,37 @@ font-size:12px;
 <script>
 
 window.addEventListener("load", function(){
+
+/* SCROLLING TEXT */
+
+const messages = [
+"All Summer Dates are from 10am - 12pm",
+"Registration Deadline for summer date: 7.31.2026",
+"Registration Deadline for Winter Spring dates: 1.4.2027"
+];
+
+let msgIndex = 0;
+const ticker = document.getElementById("tickerText");
+
+function startScroll(){
+
+ticker.style.animation = "none";
+ticker.offsetHeight;
+
+ticker.innerText = messages[msgIndex];
+
+ticker.style.animation = "scrollText 7s linear forwards";
+
+msgIndex = (msgIndex + 1) % messages.length;
+
+}
+
+startScroll();
+
+ticker.addEventListener("animationend", startScroll);
+
+
+/* TABLE DATA */
 
 const sheetURL =
 "https://docs.google.com/spreadsheets/d/e/2PACX-1vTU81dHXm7z2zofzSveoAWzQBc-sm6cRYxcPxpUNwafw9PpeCwDH19UueLOSSCqayL6RgC_RegDMXnJ/pub?gid=0&single=true&output=csv";
