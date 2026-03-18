@@ -201,22 +201,15 @@ let msgIndex = 0;
 const ticker = document.getElementById("tickerText");
 
 function startScroll(){
-
 ticker.style.animation="none";
 ticker.offsetHeight;
-
 ticker.innerText = messages[msgIndex];
-
 ticker.style.animation="scrollText 16s linear forwards";
-
 msgIndex = (msgIndex + 1) % messages.length;
-
 }
 
 startScroll();
-
 ticker.addEventListener("animationend", startScroll);
-
 
 
 /* TABLE DATA */
@@ -231,21 +224,17 @@ Papa.parse(sheetURL,{
 download:true,
 header:true,
 complete:function(results){
-
 sheetData = results.data.filter(row => row.Offering);
 applyFilters();
-
 }
 });
 
 
 function applyFilters(){
 
-let location =
-document.getElementById("locationFilter").value;
+let location = document.getElementById("locationFilter").value;
 
-let filtered =
-sheetData.filter(row=>{
+let filtered = sheetData.filter(row=>{
 
 let matchLocation = true;
 
@@ -273,11 +262,7 @@ let bParts = b.Date.split("/");
 let dateA = new Date(aParts[2], aParts[0]-1, aParts[1]);
 let dateB = new Date(bParts[2], bParts[0]-1, bParts[1]);
 
-if(currentSort === "asc"){
-return dateA - dateB;
-}else{
-return dateB - dateA;
-}
+return currentSort === "asc" ? dateA - dateB : dateB - dateA;
 
 });
 
@@ -286,20 +271,29 @@ return dateB - dateA;
 
 function renderTable(data){
 
-const tbody =
-document.querySelector("#myTable tbody");
-
+const tbody = document.querySelector("#myTable tbody");
 tbody.innerHTML="";
 
 data.forEach(row=>{
 
-let detailsLink = row.Details
-? `<a href="${row.Details}" target="_blank">Details</a>`
-: `<a href="#" class="comingSoon">Details</a>`;
+// CLEAN URL FUNCTION
+function cleanURL(url){
+return url ? url.trim() : "";
+}
 
-let registerLink = row.Registration
-? `<a href="${row.Registration}" target="_blank">Register</a>`
-: `<a href="#" class="comingSoon">Register</a>`;
+// DETAILS LINK
+let detailsURL = cleanURL(row.Details);
+
+let detailsLink = detailsURL !== ""
+  ? `<a href="${detailsURL}" target="_blank" rel="noopener noreferrer">Details</a>`
+  : `<a href="#" class="comingSoon">Details</a>`;
+
+// REGISTER LINK
+let registerURL = cleanURL(row.Registration);
+
+let registerLink = registerURL !== ""
+  ? `<a href="${registerURL}" target="_blank" rel="noopener noreferrer">Register</a>`
+  : `<a href="#" class="comingSoon">Register</a>`;
 
 let tr=document.createElement("tr");
 
